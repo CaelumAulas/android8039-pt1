@@ -1,5 +1,6 @@
 package br.com.caelum.twittelum.activity
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -7,15 +8,21 @@ import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
 import br.com.caelum.twittelum.R
-import br.com.caelum.twittelum.bancodedados.TweetDatabase
 import br.com.caelum.twittelum.modelo.Tweet
+import br.com.caelum.twittelum.viewmodel.Injetor
+import br.com.caelum.twittelum.viewmodel.TweetViewModel
 
-class TwettActivity : AppCompatActivity() {
+class TweetActivity : AppCompatActivity() {
+
+    private val viewModel: TweetViewModel by lazy {
+        ViewModelProviders.of(this, Injetor).get(TweetViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_twett)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
     }
 
@@ -54,9 +61,7 @@ class TwettActivity : AppCompatActivity() {
 
         val tweet = Tweet(mensagemDoTweet)
 
-        val tweetDao = TweetDatabase.getInstance().getTweetDao()
-
-        tweetDao.insere(tweet)
+        viewModel.insere(tweet)
 
         Toast.makeText(this, tweet.toString(), Toast.LENGTH_LONG).show()
 
