@@ -2,19 +2,28 @@ package br.com.caelum.twittelum.activity
 
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import br.com.caelum.twittelum.R
 import br.com.caelum.twittelum.modelo.Tweet
 import br.com.caelum.twittelum.viewmodel.Injetor
 import br.com.caelum.twittelum.viewmodel.TweetViewModel
+import kotlinx.android.synthetic.main.activity_twett.*
+import java.io.File
 
 class TweetActivity : AppCompatActivity() {
+
+    private var caminho: String? = null
 
     private val viewModel: TweetViewModel by lazy {
         ViewModelProviders.of(this, Injetor).get(TweetViewModel::class.java)
@@ -24,10 +33,17 @@ class TweetActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_twett)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-
     }
 
+
+    override fun onResume() {
+        super.onResume()
+
+        caminho?.let {
+            carregaFoto()
+        }
+
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
@@ -66,8 +82,23 @@ class TweetActivity : AppCompatActivity() {
 
         val vaiParaCamera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
+        val localFoto: Uri = defineUri()
+
+        vaiParaCamera.putExtra(MediaStore.EXTRA_OUTPUT, localFoto)
+
         startActivity(vaiParaCamera)
 
+    }
+
+    private fun defineUri(): Uri {
+
+        val nomeArquivo = System.currentTimeMillis()
+        caminho = "${getExternalFilesDir("imagens")}/$nomeArquivo.jpg"
+
+        val arquivoVazioFoto = File(caminho)
+
+        val localFoto: Uri = FileProvider.getUriForFile(this, "MeuProvider", arquivoVazioFoto)
+        return localFoto
     }
 
 
@@ -84,4 +115,19 @@ class TweetActivity : AppCompatActivity() {
 
 
     }
+
+    private fun carregaFoto() {
+
+
+        val bitmap = BitmapFactory.decodeFile(caminho)
+
+        val bitmapTratado = Bitmap.createScaledBitmap(bitmap, 300, 300, true)
+
+        fotoTweetForm.setImageBitmap(bitmapTratado)
+
+        fotoTweetForm.scaleType = ImageView.ScaleType.FIT_XY
+
+    }
+
+
 }
