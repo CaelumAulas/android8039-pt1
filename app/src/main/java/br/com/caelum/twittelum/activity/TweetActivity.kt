@@ -1,7 +1,9 @@
 package br.com.caelum.twittelum.activity
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -44,6 +46,13 @@ class TweetActivity : AppCompatActivity() {
                 true
             }
 
+            R.id.foto_tweet_menu -> {
+
+                vaiParaCamera()
+
+                true
+            }
+
             android.R.id.home -> {
                 finish()
                 true
@@ -51,6 +60,14 @@ class TweetActivity : AppCompatActivity() {
             else -> false
 
         }
+    }
+
+    private fun vaiParaCamera() {
+
+        val vaiParaCamera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+        startActivity(vaiParaCamera)
+
     }
 
 
