@@ -1,5 +1,6 @@
 package br.com.caelum.twittelum.activity
 
+import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.graphics.Bitmap
@@ -36,14 +37,17 @@ class TweetActivity : AppCompatActivity() {
     }
 
 
-    override fun onResume() {
-        super.onResume()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        caminho?.let {
-            carregaFoto()
+        if (requestCode == 123) {
+            if (resultCode == Activity.RESULT_OK) {
+                carregaFoto()
+            } else {
+                caminho = null
+            }
         }
-
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
@@ -86,7 +90,7 @@ class TweetActivity : AppCompatActivity() {
 
         vaiParaCamera.putExtra(MediaStore.EXTRA_OUTPUT, localFoto)
 
-        startActivity(vaiParaCamera)
+        startActivityForResult(vaiParaCamera, 123)
 
     }
 
