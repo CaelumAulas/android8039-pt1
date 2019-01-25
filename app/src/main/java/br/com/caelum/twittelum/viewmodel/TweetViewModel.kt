@@ -10,4 +10,6 @@ class TweetViewModel(private val repository: TweetRepository) : ViewModel() {
 
     fun insere(tweet: Tweet) = repository.salva(tweet)
 
+    fun deleta(tweet: Tweet) = repository.deleta(tweet)
+
 }

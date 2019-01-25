@@ -9,4 +9,6 @@ class TweetRepository(private val fonteDeDados: TweetDAO) {
 
     fun salva(tweet: Tweet) = fonteDeDados.insere(tweet)
 
+    fun deleta(tweet: Tweet) = fonteDeDados.deleta(tweet)
+
 }
