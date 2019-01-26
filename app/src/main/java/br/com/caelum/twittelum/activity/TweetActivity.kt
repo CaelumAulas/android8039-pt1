@@ -16,6 +16,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import br.com.caelum.twittelum.R
+import br.com.caelum.twittelum.extensions.decodificaParaBase64
 import br.com.caelum.twittelum.modelo.Tweet
 import br.com.caelum.twittelum.viewmodel.Injetor
 import br.com.caelum.twittelum.viewmodel.TweetViewModel
@@ -108,16 +109,23 @@ class TweetActivity : AppCompatActivity() {
 
     private fun publicaTweet() {
 
-        val conteudo = findViewById<EditText>(R.id.tweet)
-        val mensagemDoTweet = conteudo.text.toString()
-
-        val tweet = Tweet(mensagemDoTweet)
+        val tweet = criaTweet()
 
         viewModel.insere(tweet)
 
         Toast.makeText(this, tweet.toString(), Toast.LENGTH_LONG).show()
 
 
+    }
+
+    private fun criaTweet(): Tweet {
+        val conteudo = findViewById<EditText>(R.id.tweet)
+        val mensagemDoTweet = conteudo.text.toString()
+
+        val foto = fotoTweetForm.tag as String?
+
+        val tweet = Tweet(mensagemDoTweet, foto)
+        return tweet
     }
 
     private fun carregaFoto() {
@@ -131,6 +139,9 @@ class TweetActivity : AppCompatActivity() {
 
         fotoTweetForm.scaleType = ImageView.ScaleType.FIT_XY
 
+        val fotoBase64: String = bitmapTratado.decodificaParaBase64()
+
+        fotoTweetForm.tag = fotoBase64
     }
 
 

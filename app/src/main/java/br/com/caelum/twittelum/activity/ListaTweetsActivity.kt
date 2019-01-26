@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import br.com.caelum.twittelum.R
@@ -33,6 +32,7 @@ class ListaTweetsActivity : AppCompatActivity() {
             val adapter = ArrayAdapter<Tweet>(this, android.R.layout.simple_list_item_1, tweets)
 
             listaTweets.adapter = adapter
+
         })
 
 
