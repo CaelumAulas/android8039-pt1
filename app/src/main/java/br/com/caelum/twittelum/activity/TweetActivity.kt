@@ -20,7 +20,7 @@ import br.com.caelum.twittelum.extensions.decodificaParaBase64
 import br.com.caelum.twittelum.modelo.Tweet
 import br.com.caelum.twittelum.viewmodel.Injetor
 import br.com.caelum.twittelum.viewmodel.TweetViewModel
-import kotlinx.android.synthetic.main.activity_twett.*
+import kotlinx.android.synthetic.main.activity_tweet.*
 import java.io.File
 
 class TweetActivity : AppCompatActivity() {
@@ -33,7 +33,7 @@ class TweetActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_twett)
+        setContentView(R.layout.activity_tweet)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
