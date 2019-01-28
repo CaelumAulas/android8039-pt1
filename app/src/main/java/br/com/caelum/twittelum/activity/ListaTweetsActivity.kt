@@ -7,8 +7,8 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import br.com.caelum.twittelum.R
+import br.com.caelum.twittelum.adapter.TweetAdapter
 import br.com.caelum.twittelum.modelo.Tweet
 import br.com.caelum.twittelum.viewmodel.Injetor
 import br.com.caelum.twittelum.viewmodel.TweetViewModel
@@ -29,9 +29,14 @@ class ListaTweetsActivity : AppCompatActivity() {
         val liveData = viewModel.getLista()
 
         liveData.observe(this, Observer { tweets ->
-            val adapter = ArrayAdapter<Tweet>(this, android.R.layout.simple_list_item_1, tweets)
 
-            listaTweets.adapter = adapter
+            tweets?.let {
+                val adapter = TweetAdapter(it)
+
+
+                listaTweets.adapter = adapter
+            }
+
 
         })
 
